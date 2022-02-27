@@ -1,0 +1,11 @@
+{
+    "name": "api-clients",
+    "version": "1.0.0",
+    "description": "Manging 3rd party API clients",
+    "scripts": {
+    },
+    "dependencies": {
+        "axios": "0.26.0",
+        "lodash": "4.17.21"
+    }
+}

@@ -1,0 +1,14 @@
+{
+    "name": "client-service",
+    "version": "1.0.0",
+    "description": "Manging interaction between moment's BE and client apps",
+    "scripts": {
+        "start": "node ./src/index.js",
+        "start:dev": "NODE_ENV=development nodemon ./index.js"
+    },
+    "dependencies": {
+        "express": "4.17.2",
+        "axios": "0.26.0",
+        "lodash": "4.17.21"
+    }
+}

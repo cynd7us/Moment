@@ -1,0 +1,14 @@
+{
+    "name": "logger",
+    "version": "1.0.0",
+    "description": "Mannging logging layer",
+    "scripts": {
+    },
+    "dependencies": {
+        "winston": "3.6.0",
+        "axios": "0.26.0",
+        "lodash": "4.17.21",
+        "json-stringify-safe": "5.0.1",
+        "cls-hooked": "4.2.2"
+    }
+}

@@ -1,0 +1,12 @@
+{
+    "name": "auth-service",
+    "version": "1.0.0",
+    "description": "Manging authentication & authorization layer",
+    "scripts": {
+        "start": "node ./src/index.js",
+        "start:dev": "NODE_ENV=development nodemon ./index.js"
+    },
+    "dependencies": {
+        "express": "4.17.2"
+    }
+}

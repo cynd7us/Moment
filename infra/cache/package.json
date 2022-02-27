@@ -1,0 +1,11 @@
+{
+    "name": "cache",
+    "version": "1.0.0",
+    "description": "Mannging cache layer",
+    "scripts": {
+    },
+    "dependencies": {
+        "ioredis": "4.28.5",
+        "lodash": "4.17.21"
+    }
+}

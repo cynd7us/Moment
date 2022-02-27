@@ -1,0 +1,17 @@
+#!/usr/bin/env node
+
+// Run me with ./bin/www relative/path/to/app
+const { join } = require('path');
+
+const setUpEnv = async () => {
+  // TODO: Setup environment
+};
+
+setUpEnv()
+  .then(() => {
+    const app = require(join(__dirname, `../${process.argv[2]}`));
+    return app();
+  })
+  .catch((error) => {
+    process.exit(1);
+  });

@@ -1,0 +1,59 @@
+{
+    "name": "moment",
+    "version": "1.0.0",
+    "private": true,
+    "description": "global social network for content discussion and discovery. Use it as a diary to record and share your opinion about content",
+    "license": "UNLICENSED",
+    "author": "Yzgeav Zohar",
+    "workspaces": [
+        "services/*",
+        "infra/*",
+        "jobs/*"
+    ],
+    "scripts": {
+        "___tools___": "________",
+        "lint": "eslint --ignore-path .gitignore --ignore-pattern \"!**/.*\" .",
+        "lint:fix": "npm run lint -- --fix",
+        "lint:staged": "lint-staged",
+        "prettify": "prettier --write \"**/*.{scss,js,json}\"",
+        "___start___": "_______",
+        "start:auth-service": "./bin/www services/auth-service/index.js",
+        "start:client-service": "./bin/www services/client-service/index.js",
+        "___db___": "_______",
+        "db:migrate": "node ./infra/db/migrate/migrations/"
+    },
+    "pre-commit": "lint:staged",
+    "resolutions": {
+        "babel-core": "7.0.0-bridge.0"
+    },
+    "lint-staged": {
+        "*.js": [
+            "eslint --no-ignore --fix",
+            "git add --force"
+        ],
+        "*.{md,json}": [
+            "prettier --write",
+            "git add --force"
+        ]
+    },
+    "devDependencies": {
+        "@commitlint/cli": "11.0.0",
+        "@commitlint/config-conventional": "11.0.0",
+        "@commitlint/travis-cli": "11.0.0",
+        "lerna": "^3.22.1",
+        "eslint": "6.8.0",
+        "eslint-config-airbnb-base": "14.1.0",
+        "eslint-config-prettier": "6.10.1",
+        "eslint-plugin-import": "2.20.1",
+        "eslint-plugin-jest": "23.17.1",
+        "eslint-plugin-prettier": "3.1.2",
+        "husky": "6.0.0",
+        "lint-staged": "10.0.9",
+        "npm-run-all": "4.1.5",
+        "prettier": "2.0.2",
+        "prettier-eslint": "9.0.1"
+    },
+    "dependencies": {
+        "igdb-api-node": "5.0.1"
+    }
+}
