@@ -3,13 +3,15 @@ const util = require('util');
 const exec = util.promisify(require('child_process').exec);
 const Logger = require('../../logger');
 
-Logger.initDefaultLogger({ serviceName: 'db-migrations', transports: { prettyConsole: true } });
+Logger.initDefaultLogger({
+  serviceName: 'db-migrations',
+  prettyConsole: true,
+});
+const logger = Logger.defaultLogger;
 
 const setupEnv = async () => {
-  // TODO: Setup secrets
+  /* TODO: setup secrets ? */
 };
-
-const logger = Logger.defaultLogger;
 
 const migrate = async () => {
   let modifier = '';
@@ -22,16 +24,18 @@ const migrate = async () => {
   }
 
   logger.info(`Running migration for env=${process.env.NODE_ENV}, with modifier=${modifier}`);
+  let stdout;
   const connectionString = process.env.DATABASE_URL;
-  exec(
-    `npx sequelize db:migrate${modifier} --migrations-path 'infra/db/migrate/migrations' --url=${connectionString}`,
-    (err, stdout, stderr) => {
-      logger.info(`output ${stdout}`);
-      if (err) {
-        logger.error(`exec error: ${err}, ${stderr}`);
-      }
-    },
-  );
+  try {
+    const cmd = await exec(
+      `npx sequelize db:migrate${modifier} --migrations-path 'infra/db/migrate/migrations' --url=${connectionString}`,
+    );
+    stdout = cmd.stdout;
+  } catch (error) {
+    throw new Error(error.stderr);
+  }
+
+  logger.info(`Running migration: ${stdout}`);
 };
 
 (async () => {
@@ -41,5 +45,9 @@ const migrate = async () => {
     logger.error('Failed to setup migration env');
   }
 
-  await migrate();
+  try {
+    await migrate();
+  } catch (error) {
+    logger.error('Error running migration', { error });
+  }
 })();

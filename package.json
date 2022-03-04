@@ -20,7 +20,7 @@
         "start:auth-service": "./bin/www services/auth-service/index.js",
         "start:client-service": "./bin/www services/client-service/index.js",
         "___db___": "_______",
-        "db:migrate": "node ./infra/db/migrate/migrations/"
+        "db:migrate": "node ./infra/db/migrate/index.js"
     },
     "pre-commit": "lint:staged",
     "resolutions": {
@@ -40,14 +40,14 @@
         "@commitlint/cli": "11.0.0",
         "@commitlint/config-conventional": "11.0.0",
         "@commitlint/travis-cli": "11.0.0",
-        "lerna": "^3.22.1",
         "eslint": "6.8.0",
         "eslint-config-airbnb-base": "14.1.0",
         "eslint-config-prettier": "6.10.1",
         "eslint-plugin-import": "2.20.1",
         "eslint-plugin-jest": "23.17.1",
         "eslint-plugin-prettier": "3.1.2",
-        "husky": "6.0.0",
+        "husky": "7.0.4",
+        "lerna": "4.0.0",
         "lint-staged": "10.0.9",
         "npm-run-all": "4.1.5",
         "prettier": "2.0.2",

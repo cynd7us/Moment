@@ -5,6 +5,8 @@
     "scripts": {
     },
     "dependencies": {
-        "sequelize": "6.16.3"
+        "sequelize": "6.17.0",
+        "sequelize-cli": "6.4.1",
+        "pg": "8.7.3"
     }
 }
