@@ -1,6 +1,9 @@
 const { TheMovieDbApiClient } = require('../../../infra/api-clients');
+const cache = require('../lib/cache');
 
 const getMostRatedMovies = async () => {
+  const cachedKey = await cache.get({ key: 'movies*' });
+  console.log(cachedKey);
   const MoviesApiClient = TheMovieDbApiClient.getInstance();
   const movies = await MoviesApiClient.getMostRated({ mediaType: 'movie' });
   return movies;
