@@ -8,8 +8,8 @@ class TheMovieDbApiClient {
     };
   }
 
-  async getMostRated() {
-    const url = `${this.baseUrl}/movie/top_rated?language=en&page=1`;
+  async getMostRated({ mediaType }) {
+    const url = `${this.baseUrl}/${mediaType}/top_rated?language=en&page=1`;
     const response = await axios.get(url, { headers: this.authorizationHeaders });
     const {
       data: { results: mostRated },
@@ -17,8 +17,8 @@ class TheMovieDbApiClient {
     return mostRated;
   }
 
-  async getPopular() {
-    const url = `${this.baseUrl}/movie/popular?language=en&page=1`;
+  async getPopular({ mediaType }) {
+    const url = `${this.baseUrl}/${mediaType}/popular?language=en&page=1`;
     const response = await axios.get(url, { headers: this.authorizationHeaders });
     const {
       data: { results: popular },
@@ -27,12 +27,23 @@ class TheMovieDbApiClient {
   }
 
   async getUpcoming() {
+    // upcoming doesn't exist for tv
     const url = `${this.baseUrl}/movie/upcoming?language=en&page=1`;
     const response = await axios.get(url, { headers: this.authorizationHeaders });
     const {
       data: { results: upcoming },
     } = response;
     return upcoming;
+  }
+
+  async getLatest() {
+    const url = `${this.baseUrl}/discover/tv?primary_release_year=2022&sort_by=vote_average.desc`;
+    const response = await axios.get(url, { headers: this.authorizationHeaders });
+    const {
+      data: { results: latest },
+    } = response;
+    console.log(response.data);
+    return latest;
   }
 
   static getInstance() {
