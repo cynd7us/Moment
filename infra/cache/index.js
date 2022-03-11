@@ -26,6 +26,16 @@ class Cache {
     }
   }
 
+  async getWithPrefix({ prefix }) {
+    let keys;
+    try {
+      keys = await this.redis.keys(prefix);
+    } catch (error) {
+      console.error(error);
+    }
+    return keys;
+  }
+
   async del({ key }) {
     this.redis.del(key);
   }

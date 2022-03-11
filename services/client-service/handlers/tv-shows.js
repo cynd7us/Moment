@@ -1,21 +1,18 @@
-const { TheMovieDbApiClient } = require('../../../infra/api-clients');
+const cache = require('../lib/cache');
 
 const getMostRatedTvShows = async () => {
-  const MoviesApiClient = TheMovieDbApiClient.getInstance();
-  const movies = await MoviesApiClient.getMostRated({ mediaType: 'tv' });
-  return movies;
+  const mostRatedTvShows = await cache.get({ key: 'tv.mostRated', isJson: true });
+  return mostRatedTvShows;
 };
 
 const getPopularTvShows = async () => {
-  const MoviesApiClient = TheMovieDbApiClient.getInstance();
-  const movies = await MoviesApiClient.getPopular({ mediaType: 'tv' });
-  return movies;
+  const popularTvShows = await cache.get({ key: 'tv.popular', isJson: true });
+  return popularTvShows;
 };
 
 const getLatestTvShows = async () => {
-  const MoviesApiClient = TheMovieDbApiClient.getInstance();
-  const movies = await MoviesApiClient.getLatest();
-  return movies;
+  const upcomingTvShows = await cache.get({ key: 'tv.upcoming', isJson: true });
+  return upcomingTvShows;
 };
 
 module.exports = {
