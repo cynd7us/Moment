@@ -1,16 +1,17 @@
-const { init: initCache } = require('../../infra/cache');
+const { initData } = require('./lib/init-data');
 
 const port = process.env.PORT || 5868;
 let logger = console;
 
-const setUpEnv = () => {
-  initCache();
+const setUpEnv = async () => {
   // eslint-disable-next-line global-require
   logger = require('./lib/logger');
+  // eslint-disable-next-line global-require
+  await initData();
 };
 
-module.exports = () => {
-  setUpEnv();
+module.exports = async () => {
+  await setUpEnv();
   try {
     // eslint-disable-next-line global-require
     const initApp = require('./app');

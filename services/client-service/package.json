@@ -10,6 +10,7 @@
         "express": "4.17.2",
         "axios": "0.26.0",
         "lodash": "4.17.21",
+        "bluebird": "3.7.2",
         "igdb-api-node": "5.0.1"
     }
 }

@@ -1,39 +1,48 @@
 const Redis = require('ioredis');
 const _ = require('lodash');
 
-let redis;
-const TTL = {
-  low: 60 * 60 * 12, // 12 hour
-  medium: 60 * 60 * 48, // 48 hour
-  high: 60 * 60 * 168, // 168 hours -> 1 week
-};
+class Cache {
+  constructor() {
+    this.TTL = {
+      low: 60 * 60 * 12, // 12 hour
+      medium: 60 * 60 * 48, // 48 hour
+      high: 60 * 60 * 168, // 168 hours -> 1 week
+    };
+    this.redis = new Redis(process.env.REDIS);
+  }
 
-const set = async ({ key, value, ttlPriority }) => {
-  const normalizedValue = _.isString(value) ? value : JSON.stringify(value);
-  redis.set(key, normalizedValue, 'ex', TTL[ttlPriority]);
-};
+  async get({ key, isJson = true }) {
+    const value = await this.redis.get(key);
+    if (isJson) return JSON.parse(value);
+    return value;
+  }
 
-const get = async ({ key, isJson = true }) => {
-  const value = await redis.get(key);
+  async set({ key, value, ttlPriority }) {
+    const normalizedValue = _.isString(value) ? value : JSON.stringify(value);
+    try {
+      await this.redis.set(key, normalizedValue, 'ex', this.TTL[ttlPriority]);
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
-  if (isJson) return JSON.parse(value);
+  async getWithPrefix({ prefix }) {
+    let keys;
+    try {
+      keys = await this.redis.keys(prefix);
+    } catch (error) {
+      console.error(error);
+    }
+    return keys;
+  }
 
-  return value;
-};
+  async del({ key }) {
+    this.redis.del(key);
+  }
 
-const del = async ({ key }) => redis.del(key);
+  async ping() {
+    this.redis.ping();
+  }
+}
 
-const init = () => {
-  redis = new Redis(process.env.REDIS);
-  process.once('beforeExit', () => {
-    redis.disconnect();
-  });
-};
-
-module.exports = {
-  get,
-  set,
-  del,
-  init,
-  ping: () => redis && redis.ping(),
-};
+module.exports = Cache;

@@ -1,4 +1,5 @@
 const axios = require('axios');
+const logger = require('../logger').defaultLogger;
 
 class TheMovieDbApiClient {
   constructor(options) {
@@ -6,6 +7,11 @@ class TheMovieDbApiClient {
     this.authorizationHeaders = {
       authorization: `Bearer ${options.accessToken}`,
     };
+
+    if (!options.accessToken) {
+      logger.error('Please export appropirate access token to themoviedb to run this app.');
+      process.exit(1);
+    }
   }
 
   async getMostRated({ mediaType }) {
@@ -42,8 +48,33 @@ class TheMovieDbApiClient {
     const {
       data: { results: latest },
     } = response;
-    console.log(response.data);
     return latest;
+  }
+
+  async getCollections({ mediaType }) {
+    const mostRated = await this.getMostRated({ mediaType });
+    const popular = await this.getPopular({ mediaType });
+    let upcoming;
+    if (mediaType === 'movie') {
+      upcoming = await this.getUpcoming();
+    } else {
+      upcoming = await this.getLatest();
+    }
+
+    return {
+      mostRated: {
+        ttl: 'high',
+        data: mostRated,
+      },
+      popular: {
+        ttl: 'medium',
+        data: popular,
+      },
+      upcoming: {
+        ttl: 'low',
+        data: upcoming,
+      },
+    };
   }
 
   static getInstance() {
