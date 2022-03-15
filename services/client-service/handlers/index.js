@@ -2,8 +2,6 @@ const { getMostRatedTvShows, getPopularTvShows, getLatestTvShows } = require('./
 const { getMostRatedMovies, getPopularMovies, getUpcomingMovies } = require('./movies');
 const { getMostRatedBooks, getPopularBooks, getUpcomingBooks } = require('./books');
 
-const { getMostRatedGames } = require('./games');
-
 module.exports = {
   getMostRatedMovies,
   getPopularMovies,
@@ -11,7 +9,6 @@ module.exports = {
   getMostRatedTvShows,
   getPopularTvShows,
   getLatestTvShows,
-  getMostRatedGames,
   getMostRatedBooks,
   getPopularBooks,
   getUpcomingBooks,
