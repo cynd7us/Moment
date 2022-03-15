@@ -16,7 +16,13 @@ class TheMovieDbApiClient {
 
   async getMostRated({ mediaType }) {
     const url = `${this.baseUrl}/${mediaType}/top_rated?language=en&page=1`;
-    const response = await axios.get(url, { headers: this.authorizationHeaders });
+    let response;
+    try {
+      response = await axios.get(url, { headers: this.authorizationHeaders });
+    } catch (error) {
+      logger.error(`Failed to query most rated ${mediaType}`, error);
+    }
+
     const {
       data: { results: mostRated },
     } = response;
@@ -25,7 +31,13 @@ class TheMovieDbApiClient {
 
   async getPopular({ mediaType }) {
     const url = `${this.baseUrl}/${mediaType}/popular?language=en&page=1`;
-    const response = await axios.get(url, { headers: this.authorizationHeaders });
+    let response;
+    try {
+      response = await axios.get(url, { headers: this.authorizationHeaders });
+    } catch (error) {
+      logger.error(`Failed to query popular ${mediaType}`, error);
+    }
+
     const {
       data: { results: popular },
     } = response;
@@ -35,7 +47,13 @@ class TheMovieDbApiClient {
   async getUpcoming() {
     // upcoming doesn't exist for tv
     const url = `${this.baseUrl}/movie/upcoming?language=en&page=1`;
-    const response = await axios.get(url, { headers: this.authorizationHeaders });
+    let response;
+    try {
+      response = await axios.get(url, { headers: this.authorizationHeaders });
+    } catch (error) {
+      logger.error(`Failed to query upcoming movies`, error);
+    }
+
     const {
       data: { results: upcoming },
     } = response;
@@ -44,7 +62,13 @@ class TheMovieDbApiClient {
 
   async getLatest() {
     const url = `${this.baseUrl}/discover/tv?primary_release_year=2022&sort_by=vote_average.desc`;
-    const response = await axios.get(url, { headers: this.authorizationHeaders });
+    let response;
+    try {
+      response = await axios.get(url, { headers: this.authorizationHeaders });
+    } catch (error) {
+      logger.error(`Failed to query latest tv shows`, error);
+    }
+
     const {
       data: { results: latest },
     } = response;

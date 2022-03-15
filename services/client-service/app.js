@@ -11,7 +11,9 @@ const {
   getMostRatedTvShows,
   getPopularTvShows,
   getLatestTvShows,
-  getMostRatedGames,
+  getMostRatedBooks,
+  getPopularBooks,
+  getUpcomingBooks,
 } = require('./handlers');
 const { respondsWithJson, genericErrorHandler } = require('../../infra/middleware');
 
@@ -35,7 +37,9 @@ module.exports = () => {
   app.get('/tv-shows/popular', respondsWithJson(getPopularTvShows));
   app.get('/tv-shows/latest', respondsWithJson(getLatestTvShows));
 
-  app.get('/games/most-rated', respondsWithJson(getMostRatedGames));
+  app.get('/books/most-rated', respondsWithJson(getMostRatedBooks));
+  app.get('/books/popular', respondsWithJson(getPopularBooks));
+  app.get('/books/upcoming', respondsWithJson(getUpcomingBooks));
 
   app.use(genericErrorHandler({ logger }));
 

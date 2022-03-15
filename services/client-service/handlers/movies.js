@@ -1,5 +1,5 @@
-const { TheMovieDbApiClient } = require('../../../infra/api-clients');
 const cache = require('../lib/cache');
+const logger = require('../../../infra/logger').defaultLogger;
 
 const getMostRatedMovies = async () => {
   const mostRatedMovies = await cache.get({ key: 'movie.mostRated', isJson: true });

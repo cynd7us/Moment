@@ -15,8 +15,11 @@ const saveCollectionInRedis = async ({ type, mediaCollection }) => {
 const initData = async () => {
   const isMoviesCached = await cache.getWithPrefix({ prefix: 'movie.*' });
   const isTvShowsCached = await cache.getWithPrefix({ prefix: 'tv.*' });
-  const isCollectionNoCached = _.isEmpty(isMoviesCached) && _.isEmpty(isTvShowsCached);
+  const isBooksCached = await cache.getWithPrefix({ prefix: 'books.*' });
+  const isCollectionNoCached =
+    _.isEmpty(isMoviesCached) || _.isEmpty(isTvShowsCached) || _.isEmpty(isBooksCached);
   if (isCollectionNoCached) {
+    // Initalize TheMovieDb API client
     // eslint-disable-next-line global-require
     const { TheMovieDbApiClient } = require('../../../infra/api-clients');
     const TheMovieDBApiClient = TheMovieDbApiClient.getInstance();
@@ -26,6 +29,13 @@ const initData = async () => {
     // load tvshows collections to redis
     const tvShowsCollections = await TheMovieDBApiClient.getCollections({ mediaType: 'tv' });
     await saveCollectionInRedis({ type: 'tv', mediaCollection: tvShowsCollections });
+
+    // Initialize Google Books API client
+    // eslint-disable-next-line global-require
+    const { GoogleBooksApiClient } = require('../../../infra/api-clients');
+    const GoogleBooksAPIClient = GoogleBooksApiClient.getInstance();
+    const booksCollections = await GoogleBooksAPIClient.getCollections();
+    await saveCollectionInRedis({ type: 'books', mediaCollection: booksCollections });
   }
 };
 
