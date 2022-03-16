@@ -14,6 +14,7 @@
         "igdb-api-node": "5.0.1",
         "@moment/cache": "1.0.0",
         "@moment/logger": "1.0.0",
-        "@moment/middleware": "1.0.0"
+        "@moment/middleware": "1.0.0",
+        "@moment/api-clients": "1.0.0"
     }
 }

@@ -1,3 +1,4 @@
+const { TheMovieDbApiClient } = require('@moment/api-clients');
 const cache = require('../lib/cache');
 const logger = require('../lib/logger');
 
@@ -19,8 +20,24 @@ const getLatestTvShows = async () => {
   return upcomingTvShows;
 };
 
+const getTvShowDetails = async ({ params: { tvShow } }) => {
+  logger.info('get tv show details requested');
+  const TheMovieDBAPIClient = TheMovieDbApiClient.getInstance();
+  let tvShowDetails;
+
+  try {
+    tvShowDetails = await TheMovieDBAPIClient.search({ mediaType: 'tv', keyword: tvShow });
+  } catch (error) {
+    logger.error('failed to find tv show details', error, tvShow);
+    throw new Error('failed to find tv show');
+  }
+
+  return tvShowDetails;
+};
+
 module.exports = {
   getMostRatedTvShows,
   getPopularTvShows,
   getLatestTvShows,
+  getTvShowDetails,
 };

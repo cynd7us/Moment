@@ -1,6 +1,13 @@
 const axios = require('axios');
 const Promise = require('bluebird');
-const logger = require('@moment/logger').defaultLogger;
+const Logger = require('@moment/logger');
+
+Logger.initDefaultLogger({
+  serviceName: 'GoogleBooksApiClient',
+  prettyConsole: true,
+});
+
+const logger = Logger.defaultLogger;
 
 class GoogleBooksApiClient {
   constructor() {
