@@ -1,6 +1,7 @@
 const _ = require('lodash');
 const Promise = require('bluebird');
 const cache = require('./cache');
+const logger = require('../../../infra/logger').defaultLogger;
 
 const saveCollectionInRedis = async ({ type, mediaCollection }) => {
   await Promise.each(Object.keys(mediaCollection), async (collection) => {
@@ -9,6 +10,8 @@ const saveCollectionInRedis = async ({ type, mediaCollection }) => {
       value: mediaCollection[collection].data,
       ttlPriority: mediaCollection[collection].ttl,
     });
+
+    logger.info(`Set new collection in redis`, `${type}.${collection}`);
   });
 };
 
@@ -19,6 +22,7 @@ const initData = async () => {
   const isCollectionNoCached =
     _.isEmpty(isMoviesCached) || _.isEmpty(isTvShowsCached) || _.isEmpty(isBooksCached);
   if (isCollectionNoCached) {
+    logger.info('Refetching to load collection in cache');
     // Initalize TheMovieDb API client
     // eslint-disable-next-line global-require
     const { TheMovieDbApiClient } = require('../../../infra/api-clients');
@@ -36,6 +40,8 @@ const initData = async () => {
     const GoogleBooksAPIClient = GoogleBooksApiClient.getInstance();
     const booksCollections = await GoogleBooksAPIClient.getCollections();
     await saveCollectionInRedis({ type: 'books', mediaCollection: booksCollections });
+
+    logger.info('Collections loaded to redis');
   }
 };
 

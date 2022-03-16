@@ -2,6 +2,7 @@
 
 // Run me with ./bin/www relative/path/to/app
 const { join } = require('path');
+const logger = require('../infra/logger').defaultLogger;
 
 const setUpEnv = async () => {
   // TODO: Setup environment
@@ -9,9 +10,11 @@ const setUpEnv = async () => {
 
 setUpEnv()
   .then(() => {
+    // eslint-disable-next-line global-require
     const app = require(join(__dirname, `../${process.argv[2]}`));
     return app();
   })
   .catch((error) => {
+    logger.error(`Failed to execute service successfuly`, error);
     process.exit(1);
   });

@@ -11,6 +11,7 @@ class GoogleBooksApiClient {
     let response;
     try {
       response = await axios.get(`${this.baseUrl}/volumes?q=${keyword}`);
+      logger.info('request sent to Google books API', response);
     } catch (error) {
       logger.error(`Failed to query book: ${keyword}`, error);
     }
@@ -19,6 +20,7 @@ class GoogleBooksApiClient {
       throw new Error(`Failed to query book, no items returned`);
     }
 
+    logger.info('Google books API successfuly returned book details');
     return response.data.items[0].volumeInfo;
   }
 
@@ -37,10 +39,18 @@ class GoogleBooksApiClient {
     ];
     const books = [];
     await Promise.each(mostRatedBooks, async (book) => {
-      const bookDetails = await this.search(book);
-      books.push(bookDetails);
+      let volumeItem;
+      try {
+        volumeItem = await this.search(book);
+      } catch (error) {
+        // no items returned
+        logger.error('No items returned from Google books API', error, book);
+      }
+
+      books.push(volumeItem);
     });
 
+    logger.info('Most rated books collection was successfuly fetched');
     return books;
   }
 
@@ -57,10 +67,18 @@ class GoogleBooksApiClient {
     ];
     const books = [];
     await Promise.each(popularBooks, async (book) => {
-      const bookDetails = await this.search(book);
-      books.push(bookDetails);
+      let volumeItem;
+      try {
+        volumeItem = await this.search(book);
+      } catch (error) {
+        // no items returned
+        logger.error('No items returned from Google books API', error, book);
+      }
+
+      books.push(volumeItem);
     });
 
+    logger.info('Popular books collection was successfuly fetched');
     return books;
   }
 
@@ -82,10 +100,18 @@ class GoogleBooksApiClient {
     ];
     const books = [];
     await Promise.each(upcomingBooks, async (book) => {
-      const bookDetails = await this.search(book);
-      books.push(bookDetails);
+      let volumeItem;
+      try {
+        volumeItem = await this.search(book);
+      } catch (error) {
+        // no items returned
+        logger.error('No items returned from Google books API', error, book);
+      }
+
+      books.push(volumeItem);
     });
 
+    logger.info('Upcoming books collection was successfuly fetched');
     return books;
   }
 

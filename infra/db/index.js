@@ -1,8 +1,8 @@
 /* eslint-disable global-require, import/no-dynamic-require */
 const { readdirSync } = require('fs');
 const { join } = require('path');
-
 const Sequelize = require('sequelize');
+const logger = require('../logger').defaultLogger;
 
 let sequelize;
 const models = {};
@@ -53,9 +53,9 @@ const initDb = (sequelizeInstance) => {
   // Initialize only once
   if (sequelize && !sequelizeInstance) return;
 
-  console.log('Initializing Sequelize');
+  logger.info('Initializing Sequelize');
   init(sequelizeInstance);
-  console.log('Sequelize is ready');
+  logger.info('Sequelize is ready');
 };
 
 module.exports = { initDb, getSequelize, models };

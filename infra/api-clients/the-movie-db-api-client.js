@@ -19,6 +19,7 @@ class TheMovieDbApiClient {
     let response;
     try {
       response = await axios.get(url, { headers: this.authorizationHeaders });
+      logger.info('request sent to TheMovieDB API');
     } catch (error) {
       logger.error(`Failed to query most rated ${mediaType}`, error);
     }
@@ -26,6 +27,8 @@ class TheMovieDbApiClient {
     const {
       data: { results: mostRated },
     } = response;
+
+    logger.info(`Most rated ${mediaType} collection was successfuly fetched`);
     return mostRated;
   }
 
@@ -34,6 +37,7 @@ class TheMovieDbApiClient {
     let response;
     try {
       response = await axios.get(url, { headers: this.authorizationHeaders });
+      logger.info('request sent to TheMovieDB API');
     } catch (error) {
       logger.error(`Failed to query popular ${mediaType}`, error);
     }
@@ -41,6 +45,8 @@ class TheMovieDbApiClient {
     const {
       data: { results: popular },
     } = response;
+
+    logger.info(`Popular ${mediaType} collection was successfuly fetched`);
     return popular;
   }
 
@@ -50,6 +56,7 @@ class TheMovieDbApiClient {
     let response;
     try {
       response = await axios.get(url, { headers: this.authorizationHeaders });
+      logger.info('request sent to TheMovieDB API');
     } catch (error) {
       logger.error(`Failed to query upcoming movies`, error);
     }
@@ -57,6 +64,8 @@ class TheMovieDbApiClient {
     const {
       data: { results: upcoming },
     } = response;
+
+    logger.info('Upcoming movies collection was successfuly fetched');
     return upcoming;
   }
 
@@ -65,6 +74,7 @@ class TheMovieDbApiClient {
     let response;
     try {
       response = await axios.get(url, { headers: this.authorizationHeaders });
+      logger.info('request sent to TheMovieDB API');
     } catch (error) {
       logger.error(`Failed to query latest tv shows`, error);
     }
@@ -72,6 +82,8 @@ class TheMovieDbApiClient {
     const {
       data: { results: latest },
     } = response;
+
+    logger.info('Latest tv shows collection was successfuly fetched');
     return latest;
   }
 
