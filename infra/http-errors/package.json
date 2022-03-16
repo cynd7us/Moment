@@ -1,0 +1,9 @@
+{
+    "name": "@moment/http-errors",
+    "version": "1.0.0",
+    "description": "Mannging common http errors layer",
+    "scripts": {
+    },
+    "dependencies": {
+    }
+}
