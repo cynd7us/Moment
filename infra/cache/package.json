@@ -1,5 +1,5 @@
 {
-    "name": "cache",
+    "name": "@moment/cache",
     "version": "1.0.0",
     "description": "Mannging cache layer",
     "scripts": {

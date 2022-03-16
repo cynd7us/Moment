@@ -1,4 +1,4 @@
-const Logger = require('../../../infra/logger');
+const Logger = require('@moment/logger');
 
 module.exports = new Logger({
   serviceName: 'client-service',

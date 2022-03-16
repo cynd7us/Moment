@@ -1,6 +1,6 @@
 const axios = require('axios');
 const Promise = require('bluebird');
-const logger = require('../logger').defaultLogger;
+const logger = require('@moment/logger').defaultLogger;
 
 class GoogleBooksApiClient {
   constructor() {

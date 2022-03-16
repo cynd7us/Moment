@@ -1,5 +1,5 @@
 {
-    "name": "db",
+    "name": "@moment/db",
     "version": "1.0.0",
     "description": "Mannging database layer",
     "scripts": {
@@ -7,6 +7,7 @@
     "dependencies": {
         "sequelize": "6.17.0",
         "sequelize-cli": "6.4.1",
-        "pg": "8.7.3"
+        "pg": "8.7.3",
+        "@moment/logger": "1.0.0"
     }
 }

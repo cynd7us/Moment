@@ -1,4 +1,5 @@
 const express = require('express');
+const { respondsWithJson, genericErrorHandler } = require('@moment/middleware');
 const logger = require('./lib/logger');
 
 const app = express();
@@ -15,7 +16,6 @@ const {
   getPopularBooks,
   getUpcomingBooks,
 } = require('./handlers');
-const { respondsWithJson, genericErrorHandler } = require('../../infra/middleware');
 
 app.use(express.json({ limit: '2mb' }));
 app.use(express.urlencoded({ extended: true }));

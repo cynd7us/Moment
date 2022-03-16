@@ -1,7 +1,7 @@
 const _ = require('lodash');
 const Promise = require('bluebird');
+const logger = require('@moment/logger').defaultLogger;
 const cache = require('./cache');
-const logger = require('../../../infra/logger').defaultLogger;
 
 const saveCollectionInRedis = async ({ type, mediaCollection }) => {
   await Promise.each(Object.keys(mediaCollection), async (collection) => {

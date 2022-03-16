@@ -1,3 +1,3 @@
-const Cache = require('../../../infra/cache');
+const Cache = require('@moment/cache');
 
 module.exports = new Cache();

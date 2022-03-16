@@ -2,7 +2,7 @@
 const { readdirSync } = require('fs');
 const { join } = require('path');
 const Sequelize = require('sequelize');
-const logger = require('../logger').defaultLogger;
+const logger = require('@moment/logger').defaultLogger;
 
 let sequelize;
 const models = {};

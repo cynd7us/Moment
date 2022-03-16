@@ -1,5 +1,5 @@
 const axios = require('axios');
-const logger = require('../logger').defaultLogger;
+const logger = require('@moment/logger').defaultLogger;
 
 class TheMovieDbApiClient {
   constructor(options) {
