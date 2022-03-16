@@ -29,7 +29,10 @@ module.exports = () => {
   app.get('/', (req, res) => {
     res.send('client-service API');
   });
-  // app.get(healthCheckRoute, healthCheck);
+
+  app.get(healthCheckRoute, (req, res) => {
+    res.send('healthy');
+  });
   app.get('/backend-version', (req, res) => res.json({ backendVersion }));
 
   app.get('/movies/most-rated', respondsWithJson(getMostRatedMovies));
