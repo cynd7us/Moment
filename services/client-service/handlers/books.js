@@ -1,24 +1,43 @@
 const { GoogleBooksApiClient } = require('@moment/api-clients');
-const { EntityNotFoundError } = require('@moment/http-errors');
+const { EntityNotFoundError, ApplicationError } = require('@moment/http-errors');
 
 const cache = require('../lib/cache');
 const logger = require('../lib/logger');
 
 const getMostRatedBooks = async () => {
   logger.info('get most rated books requested');
-  const mostRatedBooks = await cache.get({ key: 'books.mostRated', isJson: true });
+  let mostRatedBooks;
+  try {
+    mostRatedBooks = await cache.get({ key: 'books.mostRated', isJson: true });
+  } catch (error) {
+    logger.error('failed to get most rated books from cache', error);
+    throw new ApplicationError({ displayMessage: 'failed to get most rated books from cache' });
+  }
   return mostRatedBooks;
 };
 
 const getPopularBooks = async () => {
   logger.info('get popular books requested');
-  const popularBooks = await cache.get({ key: 'books.popular', isJson: true });
+  let popularBooks;
+  try {
+    popularBooks = await cache.get({ key: 'books.popular', isJson: true });
+  } catch (error) {
+    logger.error('failed to get popular books from cache', error);
+    throw new ApplicationError({ displayMessage: 'failed to get popular books from cache' });
+  }
   return popularBooks;
 };
 
 const getUpcomingBooks = async () => {
   logger.info('get upcoming books requested');
-  const upcomingBooks = await cache.get({ key: 'books.upcoming', isJson: true });
+  let upcomingBooks;
+  try {
+    upcomingBooks = await cache.get({ key: 'books.upcoming', isJson: true });
+  } catch (error) {
+    logger.error('failed to get upcoming books from cache', error);
+    throw new ApplicationError({ displayMessage: 'failed to get upcoming books from cache' });
+  }
+
   return upcomingBooks;
 };
 
