@@ -1,4 +1,6 @@
 const { GoogleBooksApiClient } = require('@moment/api-clients');
+const { EntityNotFoundError } = require('@moment/http-errors');
+
 const cache = require('../lib/cache');
 const logger = require('../lib/logger');
 
@@ -28,7 +30,7 @@ const getBookDetails = async ({ params: { book } }) => {
     bookDetails = await GoogleBooksAPIClient.search(book);
   } catch (error) {
     logger.error('failed to find details on book', error, book);
-    throw new Error('failed to find book details');
+    throw new EntityNotFoundError({ displayMessage: 'failed to find book details' });
   }
 
   return bookDetails;

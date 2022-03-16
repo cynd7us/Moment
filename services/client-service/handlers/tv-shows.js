@@ -1,4 +1,5 @@
 const { TheMovieDbApiClient } = require('@moment/api-clients');
+const { EntityNotFoundError } = require('@moment/http-errors');
 const cache = require('../lib/cache');
 const logger = require('../lib/logger');
 
@@ -29,7 +30,7 @@ const getTvShowDetails = async ({ params: { tvShow } }) => {
     tvShowDetails = await TheMovieDBAPIClient.search({ mediaType: 'tv', keyword: tvShow });
   } catch (error) {
     logger.error('failed to find tv show details', error, tvShow);
-    throw new Error('failed to find tv show');
+    throw new EntityNotFoundError({ displayMessage: 'failed to find tv show' });
   }
 
   return tvShowDetails;
