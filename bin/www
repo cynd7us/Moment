@@ -10,7 +10,8 @@ const setUpEnv = async () => {
 
 setUpEnv()
   .then(() => {
-    // eslint-disable-next-line global-require
+    // eslint-disable-next-line import/no-dynamic-require
+    /* eslint-disable */
     const app = require(join(__dirname, `../${process.argv[2]}`));
     return app();
   })
