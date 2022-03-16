@@ -1,5 +1,12 @@
 const axios = require('axios');
-const logger = require('@moment/logger').defaultLogger;
+const Logger = require('@moment/logger');
+
+Logger.initDefaultLogger({
+  serviceName: 'TheMovieDbApiClient',
+  prettyConsole: true,
+});
+
+const logger = Logger.defaultLogger;
 
 class TheMovieDbApiClient {
   constructor(options) {
@@ -14,6 +21,33 @@ class TheMovieDbApiClient {
     }
   }
 
+  async search({ mediaType, keyword }) {
+    const url = `${this.baseUrl}/search/${mediaType}?query=${keyword}`;
+    logger.info(url);
+    let response;
+    try {
+      response = await axios.get(url, { headers: this.authorizationHeaders });
+      logger.info('request sent to TheMovieDB API');
+    } catch (error) {
+      logger.error('failed to find item in TheMovieDB', error, keyword);
+      throw new Error('failed to find item in TheMovieDB');
+    }
+
+    const { id: itemId } = response.data.results[0];
+    let itemDetailsResponse;
+    try {
+      itemDetailsResponse = await axios.get(`${this.baseUrl}/${mediaType}/${itemId}`, {
+        headers: this.authorizationHeaders,
+      });
+      logger.info('request sent to TheMovieDB API');
+    } catch (error) {
+      logger.error('failed to get item details', error);
+      throw new Error('failed to find item details');
+    }
+
+    return itemDetailsResponse.data;
+  }
+
   async getMostRated({ mediaType }) {
     const url = `${this.baseUrl}/${mediaType}/top_rated?language=en&page=1`;
     let response;
@@ -21,7 +55,7 @@ class TheMovieDbApiClient {
       response = await axios.get(url, { headers: this.authorizationHeaders });
       logger.info('request sent to TheMovieDB API');
     } catch (error) {
-      logger.error(`Failed to query most rated ${mediaType}`, error);
+      logger.error(`failed to query most rated ${mediaType}`, error);
     }
 
     const {

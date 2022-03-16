@@ -9,12 +9,15 @@ const {
   getMostRatedMovies,
   getPopularMovies,
   getUpcomingMovies,
+  getMovieDetails,
   getMostRatedTvShows,
   getPopularTvShows,
   getLatestTvShows,
+  getTvShowDetails,
   getMostRatedBooks,
   getPopularBooks,
   getUpcomingBooks,
+  getBookDetails,
 } = require('./handlers');
 
 app.use(express.json({ limit: '2mb' }));
@@ -32,14 +35,17 @@ module.exports = () => {
   app.get('/movies/most-rated', respondsWithJson(getMostRatedMovies));
   app.get('/movies/popular', respondsWithJson(getPopularMovies));
   app.get('/movies/upcoming', respondsWithJson(getUpcomingMovies));
+  app.get('/movies/:movie', respondsWithJson(getMovieDetails));
 
   app.get('/tv-shows/most-rated', respondsWithJson(getMostRatedTvShows));
   app.get('/tv-shows/popular', respondsWithJson(getPopularTvShows));
   app.get('/tv-shows/latest', respondsWithJson(getLatestTvShows));
+  app.get('/tv-shows/:tvShow', respondsWithJson(getTvShowDetails));
 
   app.get('/books/most-rated', respondsWithJson(getMostRatedBooks));
   app.get('/books/popular', respondsWithJson(getPopularBooks));
   app.get('/books/upcoming', respondsWithJson(getUpcomingBooks));
+  app.get('/books/:book', respondsWithJson(getBookDetails));
 
   app.use(genericErrorHandler({ logger }));
 

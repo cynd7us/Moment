@@ -1,3 +1,4 @@
+const { GoogleBooksApiClient } = require('@moment/api-clients');
 const cache = require('../lib/cache');
 const logger = require('../lib/logger');
 
@@ -19,8 +20,23 @@ const getUpcomingBooks = async () => {
   return upcomingBooks;
 };
 
+const getBookDetails = async ({ params: { book } }) => {
+  logger.info('get book details requested', book);
+  const GoogleBooksAPIClient = GoogleBooksApiClient.getInstance();
+  let bookDetails;
+  try {
+    bookDetails = await GoogleBooksAPIClient.search(book);
+  } catch (error) {
+    logger.error('failed to find details on book', error, book);
+    throw new Error('failed to find book details');
+  }
+
+  return bookDetails;
+};
+
 module.exports = {
   getMostRatedBooks,
   getPopularBooks,
   getUpcomingBooks,
+  getBookDetails,
 };
