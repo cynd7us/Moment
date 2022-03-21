@@ -9,7 +9,7 @@ const getMostRated = async () => {
   try {
     mostRatedMovies = await cache.get({ key: 'movie.mostRated', isJson: true });
   } catch (error) {
-    logger.error('failed to get most rated movies from cache', error);
+    logger.error('failed to get most rated movies from cache', { error });
     throw new ApplicationError({ displayMessage: 'failed to get most rated movies from cache' });
   }
   return mostRatedMovies;
@@ -20,7 +20,7 @@ const getPopular = async () => {
   try {
     popularMovies = await cache.get({ key: 'movie.popular', isJson: true });
   } catch (error) {
-    logger.error('failed to get popular movies from cache', error);
+    logger.error('failed to get popular movies from cache', { error });
     throw new ApplicationError({ displayMessage: 'failed to get popular movies from cache' });
   }
   return popularMovies;
@@ -31,7 +31,7 @@ const getUpcoming = async () => {
   try {
     upcomingMovies = await cache.get({ key: 'movie.upcoming', isJson: true });
   } catch (error) {
-    logger.error('failed to get upcoming movies from cache', error);
+    logger.error('failed to get upcoming movies from cache', { error });
     throw new ApplicationError({ displayMessage: 'failed to get upcoming movies from cache' });
   }
   return upcomingMovies;
@@ -43,7 +43,7 @@ const getMovieDetails = async ({ movie }) => {
   try {
     movieDetails = await TheMovieDBAPIClient.search({ mediaType: 'movie', keyword: movie });
   } catch (error) {
-    logger.error('failed to find movie details', error, movie);
+    logger.error('failed to find movie details', { error, movie });
     throw new EntityNotFoundError({ displayMessage: 'failed to find movie details' });
   }
 

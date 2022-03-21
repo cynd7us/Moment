@@ -9,7 +9,7 @@ const getMostRated = async () => {
   try {
     mostRatedBooks = await cache.get({ key: 'books.mostRated', isJson: true });
   } catch (error) {
-    logger.error('failed to get most rated books from cache', error);
+    logger.error('failed to get most rated books from cache', { error });
     throw new ApplicationError({ displayMessage: 'failed to get most rated books from cache' });
   }
   return mostRatedBooks;
@@ -20,7 +20,7 @@ const getPopular = async () => {
   try {
     popularBooks = await cache.get({ key: 'books.popular', isJson: true });
   } catch (error) {
-    logger.error('failed to get popular books from cache', error);
+    logger.error('failed to get popular books from cache', { error });
     throw new ApplicationError({ displayMessage: 'failed to get popular books from cache' });
   }
   return popularBooks;
@@ -31,7 +31,7 @@ const getUpcoming = async () => {
   try {
     upcomingBooks = await cache.get({ key: 'books.upcoming', isJson: true });
   } catch (error) {
-    logger.error('failed to get upcoming books from cache', error);
+    logger.error('failed to get upcoming books from cache', { error });
     throw new ApplicationError({
       displayMessage: 'failed to get upcoming books from cache',
     });
@@ -46,7 +46,7 @@ const getBookDetails = async ({ book }) => {
   try {
     bookDetails = await GoogleBooksAPIClient.search(book);
   } catch (error) {
-    logger.error('failed to find details on book');
+    logger.error('failed to find details on book', { error, book });
     throw new EntityNotFoundError({
       displayMessage: { data: 'some data', error: 'some error ' },
       displayDetails: 'this is the reasoning',

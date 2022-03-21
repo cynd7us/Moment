@@ -1,5 +1,13 @@
 const Redis = require('ioredis');
 const _ = require('lodash');
+const Logger = require('@moment/logger');
+
+Logger.initDefaultLogger({
+  serviceName: '@momet/cache',
+  prettyConsole: true,
+});
+
+const logger = Logger.defaultLogger;
 
 class Cache {
   constructor() {
@@ -22,7 +30,7 @@ class Cache {
     try {
       await this.redis.set(key, normalizedValue, 'ex', this.TTL[ttlPriority]);
     } catch (error) {
-      console.log(error);
+      logger.error('failed to set redis value', { key, value, error });
     }
   }
 
@@ -31,7 +39,7 @@ class Cache {
     try {
       keys = await this.redis.keys(prefix);
     } catch (error) {
-      console.error(error);
+      logger.error('failed to get keys with prefix', { prefix, error });
     }
     return keys;
   }
