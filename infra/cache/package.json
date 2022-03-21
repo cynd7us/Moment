@@ -6,6 +6,7 @@
     },
     "dependencies": {
         "ioredis": "4.28.5",
-        "lodash": "4.17.21"
+        "lodash": "4.17.21",
+        "@moment/logger": "1.0.0"
     }
 }

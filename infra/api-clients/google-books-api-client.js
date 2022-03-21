@@ -17,17 +17,18 @@ class GoogleBooksApiClient {
   async search(keyword) {
     let response;
     try {
-      response = await axios.get(`${this.baseUrl}/volumes?q=${keyword}`);
-      logger.info('request sent to Google books API');
+      const url = `${this.baseUrl}/volumes?q=${keyword}`;
+      response = await axios.get(url);
+      logger.info('request sent to Google books API', { url });
     } catch (error) {
-      logger.error(`Failed to query book: ${keyword}`, error);
+      logger.error(`Failed to query book`, { error });
     }
 
     if (!response.data.items) {
       throw new Error(`Failed to query book, no items returned`);
     }
 
-    logger.info('Google books API successfuly returned book details');
+    logger.info('Google books API successfuly returned book details', { book: keyword });
     return response.data.items[0].volumeInfo;
   }
 
@@ -51,7 +52,7 @@ class GoogleBooksApiClient {
         volumeItem = await this.search(book);
       } catch (error) {
         // no items returned
-        logger.error('No items returned from Google books API', error, book);
+        logger.error('No items returned from Google books API', { error, book });
       }
 
       books.push(volumeItem);
@@ -79,7 +80,7 @@ class GoogleBooksApiClient {
         volumeItem = await this.search(book);
       } catch (error) {
         // no items returned
-        logger.error('No items returned from Google books API', error, book);
+        logger.error('No items returned from Google books API', { error, book });
       }
 
       books.push(volumeItem);
@@ -112,7 +113,7 @@ class GoogleBooksApiClient {
         volumeItem = await this.search(book);
       } catch (error) {
         // no items returned
-        logger.error('No items returned from Google books API', error, book);
+        logger.error('No items returned from Google books API', { error, book });
       }
 
       books.push(volumeItem);

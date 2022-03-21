@@ -9,7 +9,7 @@ const getMostRated = async () => {
   try {
     mostRatedTvShows = await cache.get({ key: 'tv.mostRated', isJson: true });
   } catch (error) {
-    logger.error('failed to find most rated tv shows from cache', error);
+    logger.error('failed to find most rated tv shows from cache', { error });
     throw new ApplicationError({ displayMessage: 'failed to find most rated tv shows from cache' });
   }
   return mostRatedTvShows;
@@ -20,7 +20,7 @@ const getPopular = async () => {
   try {
     popularTvShows = await cache.get({ key: 'tv.popular', isJson: true });
   } catch (error) {
-    logger.error('failed to popular tv shows from cache', error);
+    logger.error('failed to popular tv shows from cache', { error });
     throw new ApplicationError({ displayMessage: 'failed to find popular tv shows from cache' });
   }
   return popularTvShows;
@@ -31,7 +31,7 @@ const getUpcoming = async () => {
   try {
     upcomingTvShows = await cache.get({ key: 'tv.upcoming', isJson: true });
   } catch (error) {
-    logger.error('failed to find latest tv shows from cache', error);
+    logger.error('failed to find latest tv shows from cache', { error });
     throw new ApplicationError({ displayMessage: 'failed to find latest tv shows from cache' });
   }
   return upcomingTvShows;
@@ -44,7 +44,7 @@ const getTvShowDetails = async ({ tvShow }) => {
   try {
     tvShowDetails = await TheMovieDBAPIClient.search({ mediaType: 'tv', keyword: tvShow });
   } catch (error) {
-    logger.error('failed to find tv show details', error, tvShow);
+    logger.error('failed to find tv show details', { error, tvShow });
     throw new EntityNotFoundError({ displayMessage: 'failed to find tv show' });
   }
 

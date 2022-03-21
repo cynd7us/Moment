@@ -16,6 +16,6 @@ setUpEnv()
     return app();
   })
   .catch((error) => {
-    logger.error(`Failed to execute service successfuly`, error);
+    logger.error(`Failed to execute service successfuly`, { error });
     process.exit(1);
   });

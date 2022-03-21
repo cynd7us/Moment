@@ -42,7 +42,7 @@ const migrate = async () => {
   try {
     await setupEnv();
   } catch (error) {
-    logger.error('Failed to setup migration env');
+    logger.error('Failed to setup migration env', { error });
   }
 
   try {

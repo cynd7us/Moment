@@ -27,21 +27,22 @@ class TheMovieDbApiClient {
     let response;
     try {
       response = await axios.get(url, { headers: this.authorizationHeaders });
-      logger.info('request sent to TheMovieDB API');
+      logger.info('request sent to TheMovieDB API', { url });
     } catch (error) {
-      logger.error('failed to find item in TheMovieDB', error, keyword);
+      logger.error('failed to find item in TheMovieDB', { error, mediaType: keyword });
       throw new Error('failed to find item in TheMovieDB');
     }
 
     const { id: itemId } = response.data.results[0];
     let itemDetailsResponse;
     try {
-      itemDetailsResponse = await axios.get(`${this.baseUrl}/${mediaType}/${itemId}`, {
+      const getItemDetailsUrl = `${this.baseUrl}/${mediaType}/${itemId}`;
+      itemDetailsResponse = await axios.get(getItemDetailsUrl, {
         headers: this.authorizationHeaders,
       });
-      logger.info('request sent to TheMovieDB API');
+      logger.info('request sent to TheMovieDB API', { url: getItemDetailsUrl });
     } catch (error) {
-      logger.error('failed to get item details', error);
+      logger.error('failed to get item details', { error });
       throw new Error('failed to find item details');
     }
 
@@ -71,9 +72,9 @@ class TheMovieDbApiClient {
     let response;
     try {
       response = await axios.get(url, { headers: this.authorizationHeaders });
-      logger.info('request sent to TheMovieDB API');
+      logger.info('request sent to TheMovieDB API', { url });
     } catch (error) {
-      logger.error(`Failed to query popular ${mediaType}`, error);
+      logger.error(`Failed to query popular ${mediaType}`, { error });
     }
 
     const {
@@ -90,9 +91,9 @@ class TheMovieDbApiClient {
     let response;
     try {
       response = await axios.get(url, { headers: this.authorizationHeaders });
-      logger.info('request sent to TheMovieDB API');
+      logger.info('request sent to TheMovieDB API', { url });
     } catch (error) {
-      logger.error(`Failed to query upcoming movies`, error);
+      logger.error(`Failed to query upcoming movies`, { error });
     }
 
     const {
@@ -108,9 +109,9 @@ class TheMovieDbApiClient {
     let response;
     try {
       response = await axios.get(url, { headers: this.authorizationHeaders });
-      logger.info('request sent to TheMovieDB API');
+      logger.info('request sent to TheMovieDB API', { url });
     } catch (error) {
-      logger.error(`Failed to query latest tv shows`, error);
+      logger.error(`Failed to query latest tv shows`, { error });
     }
 
     const {
