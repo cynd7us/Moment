@@ -18,7 +18,7 @@ class GoogleBooksApiClient {
     let response;
     try {
       response = await axios.get(`${this.baseUrl}/volumes?q=${keyword}`);
-      logger.info('request sent to Google books API', response);
+      logger.info('request sent to Google books API');
     } catch (error) {
       logger.error(`Failed to query book: ${keyword}`, error);
     }
@@ -127,20 +127,23 @@ class GoogleBooksApiClient {
     const popular = await this.getPopular();
     const upcoming = await this.getUpcoming();
 
-    return {
-      mostRated: {
-        ttl: 'high',
+    return [
+      {
+        type: 'mostRated',
         data: mostRated,
+        ttl: 'high',
       },
-      popular: {
-        ttl: 'medium',
+      {
+        type: 'popular',
         data: popular,
+        ttl: 'medium',
       },
-      upcoming: {
-        ttl: 'low',
+      {
+        type: 'upcoming',
         data: upcoming,
+        ttl: 'low',
       },
-    };
+    ];
   }
 
   static getInstance() {

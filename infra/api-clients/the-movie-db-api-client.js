@@ -53,9 +53,9 @@ class TheMovieDbApiClient {
     let response;
     try {
       response = await axios.get(url, { headers: this.authorizationHeaders });
-      logger.info('request sent to TheMovieDB API');
+      logger.info('request sent to TheMovieDB API', { url });
     } catch (error) {
-      logger.error(`failed to query most rated ${mediaType}`, error);
+      logger.error(`failed to query most rated ${mediaType}`, { error });
     }
 
     const {
@@ -131,20 +131,23 @@ class TheMovieDbApiClient {
       upcoming = await this.getLatest();
     }
 
-    return {
-      mostRated: {
-        ttl: 'high',
+    return [
+      {
+        type: 'mostRated',
         data: mostRated,
+        ttl: 'high',
       },
-      popular: {
-        ttl: 'medium',
+      {
+        type: 'popular',
         data: popular,
+        ttl: 'medium',
       },
-      upcoming: {
-        ttl: 'low',
+      {
+        type: 'upcoming',
         data: upcoming,
+        ttl: 'low',
       },
-    };
+    ];
   }
 
   static getInstance() {

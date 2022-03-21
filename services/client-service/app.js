@@ -12,7 +12,7 @@ const {
   getMovieDetails,
   getMostRatedTvShows,
   getPopularTvShows,
-  getLatestTvShows,
+  getUpcomingTvShows,
   getTvShowDetails,
   getMostRatedBooks,
   getPopularBooks,
@@ -42,7 +42,7 @@ module.exports = () => {
 
   app.get('/tv-shows/most-rated', respondsWithJson(getMostRatedTvShows));
   app.get('/tv-shows/popular', respondsWithJson(getPopularTvShows));
-  app.get('/tv-shows/latest', respondsWithJson(getLatestTvShows));
+  app.get('/tv-shows/upcoming', respondsWithJson(getUpcomingTvShows));
   app.get('/tv-shows/:tvShow', respondsWithJson(getTvShowDetails));
 
   app.get('/books/most-rated', respondsWithJson(getMostRatedBooks));
