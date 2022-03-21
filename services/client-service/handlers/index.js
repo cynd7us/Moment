@@ -1,7 +1,7 @@
 const {
   getMostRatedTvShows,
   getPopularTvShows,
-  getLatestTvShows,
+  getUpcomingTvShows,
   getTvShowDetails,
 } = require('./tv-shows');
 const {
@@ -19,7 +19,7 @@ module.exports = {
   getMovieDetails,
   getMostRatedTvShows,
   getPopularTvShows,
-  getLatestTvShows,
+  getUpcomingTvShows,
   getTvShowDetails,
   getMostRatedBooks,
   getPopularBooks,
