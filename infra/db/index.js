@@ -2,7 +2,14 @@
 const { readdirSync } = require('fs');
 const { join } = require('path');
 const Sequelize = require('sequelize');
-const logger = require('@moment/logger').defaultLogger;
+const Logger = require('@moment/logger');
+
+Logger.initDefaultLogger({
+  serviceName: '@momet/db',
+  prettyConsole: true,
+});
+
+const logger = Logger.defaultLogger;
 
 let sequelize;
 const models = {};

@@ -1,4 +1,4 @@
-const logger = require('@moment/logger').defaultLogger;
+const logger = require('./logger');
 const cache = require('./cache');
 const { moviesRepository, tvShowsRepository, booksRepository } = require('../repositories');
 
